@@ -1,0 +1,21 @@
+{
+  "name": "awesome-eth-mpt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@ethereumjs/mpt": "^7.0.0-alpha.1",
+    "@ethereumjs/util": "^9.1.0",
+    "ethereum-cryptography": "^3.0.0",
+    "level": "^8.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
