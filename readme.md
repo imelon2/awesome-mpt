@@ -10,10 +10,23 @@ flowchart LR
 ```
 
 ```mermaid
-stateDiagram-v2
-    RLP[0,0x746573744b6579,HASH] --> RLP[null,null,null,null,null,null,...,value]
-    RLP[null,null,null,null,null,null,...,value] --> RLP[1,03030,Branch_node]
-    RLP[1,03030,Branch_node] --> RLP[null,null,null,HASHa,HASHb,null,...,null]
-    RLP[null,null,null,HASHa,HASHb,null,...,null] --> RLP[3,1,value1]
-    RLP[null,null,null,HASHa,HASHb,null,...,null] --> RLP[3,1,value2]
+graph BT
+    A["<div style='width:410px; text-align:center;'> RLP[ 0, 0x746573744b6579, <span style='color:#FFFF00'>Hash5</span> ] </div>"] 
+    B["<div style='width:410px; text-align:center;'>RLP [null, null, null, <span style='color:#990000'>Hash4</span>, null, null, ...,] [value] </div>"]
+    C["RLP [ 1, 03030, <span style='color:#B266FF'>Hash3</span> ]"]
+    D["<div style='width:410px; text-align:center;'> RLP[ [ null, null, null, <span style='color:#00FF00'>Hash1</span>, <span style='color:#FF8000'>Hash2</span>, null, ... ] [ null ] ]</div>"]
+    E["RLP[3, 1, value1]"]
+    F["RLP[3, 1, value2]"]
+
+    B --> | <span style='color:#FFFF00;'> Hash5 </span><br/> Branch Node | A
+    C --> | <span style='color:#990000;'> Hash4 </span><br/> Extention Node | B
+    D --> | <span style='color:#B266FF;'> Hash3 </span><br/> Branch Node | C
+    E --> | <span style='color:#00FF00;'> Hash1 </span><br/> Leaf Node | D
+    F --> | <span style='color:#FF8000;'> Hash2 </span><br/> Leaf Node | D
+
+    %% style B stroke:#FFFF00,stroke-width:2px;
+    %% style C stroke:#990000,stroke-width:2px;
+    %% style D stroke:#B266FF,stroke-width:2px;
+    %% style E stroke:#00FF00,stroke-width:2px;
+    %% style F stroke:#FF8000,stroke-width:2px;
 ```
