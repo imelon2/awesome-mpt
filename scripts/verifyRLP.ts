@@ -1,8 +1,10 @@
-import { MerklePatriciaTrie } from '@ethereumjs/mpt';
+import { BranchMPTNode, ExtensionMPTNode, MerklePatriciaTrie } from '@ethereumjs/mpt';
 import { bytesToHex, utf8ToBytes } from 'ethereum-cryptography/utils';
 
 async function main() {
-  const trie = new MerklePatriciaTrie(); // We create an empty Merkle Patricia Tree
+  const trie = new MerklePatriciaTrie({
+    useKeyHashing:false
+  }); // We create an empty Merkle Patricia Tree
   console.log('Empty trie root (Bytes): ', bytesToHex(trie.root())); // The trie root (32 bytes)
   console.log();
   const key = 'testKey';
@@ -29,7 +31,25 @@ async function main() {
   await trie.put(utf8ToBytes(key2), utf8ToBytes(value2));
 
   const node1 = await trie.findPath(utf8ToBytes(key)); // Looking up our branch node
-  console.log(node1.node); // The branch node
+  console.log(node1);
+  console.log();
+
+  const node2 = await trie.lookupNode((node1.node as BranchMPTNode)._branches[3]!)
+  console.log(node2);
+  console.log();
+  
+  const node3 = await trie.lookupNode(node2._value!)
+  console.log(node3);
+  console.log();
+
+
+  const leadf1 = await trie.lookupNode((node3 as BranchMPTNode)._branches[3]!)
+  const leadf2 = await trie.lookupNode((node3 as BranchMPTNode)._branches[4]!)
+
+  console.log(leadf1);
+  console.log(leadf2);
+  
+  // console.log((node1.node as BranchMPTNode)._branches[3]); // The branch node
 }
 
 void main();

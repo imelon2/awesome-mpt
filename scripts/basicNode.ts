@@ -16,7 +16,9 @@ async function test() {
   const trie = new MerklePatriciaTrie(); // We create an empty Merkle Patricia Tree
   //   const trie = new MerklePatriciaTrie({ useKeyHashing: true }); // We create an empty Merkle Patricia Tree
   console.log("Empty trie root (Bytes): ", bytesToHex(trie.root())); // The trie root (32 bytes)
+  console.log(trie.root());
   console.log();
+  
   const key = "testKey";
   const value = "testValue";
   const key1 = "testKey0";
