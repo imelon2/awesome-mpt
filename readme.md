@@ -2,6 +2,9 @@ Referece: https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages
 
 Ref: https://github.com/bit-warrior/Read-LevelDB-Geth/blob/master/readLevelDB.js
 
+RefL https://etherworld.co/2019/02/06/reading-ethereum-geth-database-leveldb/?utm_source=chatgpt.com
+
+
 ```mermaid
 flowchart LR
     0[key] --> value
@@ -31,3 +34,6 @@ graph BT
     %% style E stroke:#00FF00,stroke-width:2px;
     %% style F stroke:#FF8000,stroke-width:2px;
 ```
+
+
+schema.go https://github.com/ethereum/go-ethereum/blob/v1.14.12/core/rawdb/schema.go

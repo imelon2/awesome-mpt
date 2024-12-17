@@ -1,13 +1,14 @@
 import { MerklePatriciaTrie } from '@ethereumjs/mpt';
-import { KeyEncoding, ValueEncoding } from '@ethereumjs/util';
+import { BIGINT_1, hexToBytes, KeyEncoding, ValueEncoding } from '@ethereumjs/util';
 import { Level } from 'level';
 
 import type { BatchDBOp, DB, DBObject, EncodingOpts } from '@ethereumjs/util';
 import type { AbstractLevel } from 'abstract-level';
 import { utf8ToBytes } from 'ethereum-cryptography/utils';
-import path from 'path'
+import path from 'path';
+import BN from 'bn.js';
 
-export const CHAIN_DATA_PATH = path.join(__dirname, '../chaindata/');
+export const CHAIN_DATA_PATH = path.join(__dirname, '../geth/chaindata');
 const ENCODING_OPTS = { keyEncoding: 'view', valueEncoding: 'view' };
 const getEncodings = (opts: EncodingOpts = {}) => {
   const encodings = { keyEncoding: '', valueEncoding: '' };
@@ -127,25 +128,46 @@ export class LevelDB<
 }
 
 async function main() {
-  console.log(CHAIN_DATA_PATH);
-  
   const trie = new MerklePatriciaTrie({ db: new LevelDB(new Level(CHAIN_DATA_PATH)) });
   // console.log(trie.database().db) // LevelDB { ...
 
-  // const stateRoot = Buffer.from('7b4f15c789cbe289baf64a8ae7898dc6eaf41ed2e756c09609da9c5b651f599e', 'hex');
+  const stateRoot = Buffer.from('7b4f15c789cbe289baf64a8ae7898dc6eaf41ed2e756c09609da9c5b651f599e', 'hex');
+  // const stateRoot = Buffer.from('0aa449a51d0dad9e66331b44942c217dea1a84186295217790ece4e36560674e', 'hex');
   // const stateRoot = Buffer.from('64bb82cc8f40c7eff68b39877e6977a0249ccdd2779041c167b52b30e59d33f7', 'hex');
   // trie.root(stateRoot);
 
   // const address = '0x1001150ae8ec8843bdca3c7de86a291b43a7f835';
   // const encodedKey = Buffer.from(address.slice(2), 'hex'); // RLP 인코딩 필요
 
-  // const node1 = await trie.findPath(encodedKey);
+  const db = new Level(CHAIN_DATA_PATH);
+  await db.open();
+  const bufBE8 = (n: BN) => n.toArrayLike(Buffer, 'be', 8);
+  const headerKey = (n: BN, hash: Uint8Array) => Buffer.concat([Buffer.from('h'), bufBE8(n), hash]).toString('hex');
+  const key = headerKey(new BN(11), stateRoot);
+
+  // const a = await db.get("7b4f15c789cbe289baf64a8ae7898dc6eaf41ed2e756c09609da9c5b651f599e")
+  // console.log(a);
+
+  // const node1 = await trie.get(key);
   // console.log(node1);
+  // const a = await trie.database().db.get("0x7b4f15c789cbe289baf64a8ae7898dc6eaf41ed2e756c09609da9c5b651f599e",{
+  db.get(
+    '0x7b4f15c789cbe289baf64a8ae7898dc6eaf41ed2e756c09609da9c5b651f599e',
+    {
+      keyEncoding: KeyEncoding.Bytes,
+      valueEncoding: ValueEncoding.Bytes,
+    },
+    (err, value) => {
+      console.log(err);
+      
+      console.log(value);
+    }
+  );
+  // console.log(a); // LevelDB { ...
 
-  // console.log(trie.database().db) // LevelDB { ...
-
-  const a = trie.database().stats(false)
-  console.log(a);
-  
+  // const a = trie.database().stats(false)
+  // console.log(a);
+  // const is = await trie.checkRoot(stateRoot)
+  // console.log(is);
 }
 void main();

@@ -18,7 +18,6 @@ async function test() {
   console.log("Empty trie root (Bytes): ", bytesToHex(trie.root())); // The trie root (32 bytes)
   console.log(trie.root());
   console.log();
-  
   const key = "testKey";
   const value = "testValue";
   const key1 = "testKey0";

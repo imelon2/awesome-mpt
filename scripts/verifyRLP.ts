@@ -13,7 +13,6 @@ async function main() {
   const value1 = 'testValue0';
   const key2 = 'testKey000A';
   const value2 = 'testValueAAA';
-
   console.log('### KEY ###');
   console.log(`${key}     | 0x${bytesToHex(utf8ToBytes(key))}         | ${utf8ToBytes(key).toString()}`);
   console.log(`${key1} | 0x${bytesToHex(utf8ToBytes(key1))} | ${utf8ToBytes(key1).toString()}`);
