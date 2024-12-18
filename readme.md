@@ -37,3 +37,22 @@ graph BT
 
 
 schema.go https://github.com/ethereum/go-ethereum/blob/v1.14.12/core/rawdb/schema.go
+
+
+### Patricia Trie
+### Merkle Tree
+### Merkle Patricia Trie
+### Merkle Patricia Trie 실습
+- Level DB put, get
+- set testKey, testValue
+- node
+    - 완성본
+    - 각 노드 설명
+    - 최상단 부터 설명
+### Geth levelDB 둘러보기
+- block header
+- body
+- account
+- receipt
+- storage
+- transaction
